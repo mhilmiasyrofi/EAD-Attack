@@ -1,3 +1,18 @@
+### Reproducing EAD-Attack using Docker by Muhammad Hilmi Asyrofi
+
+pull required docker images to prepare Tensorflow 1.3.0 with Python3 on GPU
+```
+docker pull tensorflow/tensorflow:1.3.0-devel-gpu-py3
+```
+
+install Keras with specific version (because the Tensorflow 1.3.0 was last maintained 3 years ago, thus we need to install keras around 3 years ago version). I tried 2.1.2 and it works
+```
+pip3 install keras===2.1.2
+```
+
+Read the paper description and run the instruction bellow
+
+
 EAD: Elastic-Net Attacks to Deep Neural Networks 
 =====================================
 
