@@ -50,6 +50,9 @@ import scipy.misc
 import numpy as np
 from six.moves import urllib
 import tensorflow as tf
+from PIL import Image
+# from skimage.transform import resize
+
 
 # pylint: disable=line-too-long
 DATA_URL = 'http://jaina.cs.ucdavis.edu/datasets/adv/imagenet/inception_v3_2016_08_28_frozen.tar.gz'
@@ -255,7 +258,8 @@ def main(_):
   # run_inference_on_image(image)
   create_graph()
   with tf.Session() as sess:
-    dat = np.array(scipy.misc.imresize(scipy.misc.imread(image),(299,299)), dtype = np.float32)
+#     dat = np.array(scipy.misc.imresize(scipy.misc.imread(image),(299,299)), dtype = np.float32)
+    dat = np.array(Image.fromarray(scipy.misc.imread(image)).resize((299,299)), dtype = np.float32)
     dat /= 255.0
     dat -= 0.5
     # print(dat)

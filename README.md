@@ -1,4 +1,4 @@
-### Reproducing EAD-Attack using Docker by Muhammad Hilmi Asyrofi
+# Reproducing EAD-Attack using Docker by Muhammad Hilmi Asyrofi
 
 pull required docker images to prepare Tensorflow 1.3.0 with Python3 on GPU
 ```
@@ -11,6 +11,23 @@ pip3 install keras===2.1.2
 ```
 
 Read the paper description and run the instruction bellow
+
+#### Due to library depreceation, we need to change some implementation
+`setup_inception.py` line 259
+change
+```
+dat = np.array(scipy.misc.imresize(scipy.misc.imread(image),(299,299)), dtype = np.float32)
+```
+into
+```
+dat = np.array(Image.fromarray(scipy.misc.imread(image)).resize((299,299)), dtype = np.float32)
+```
+
+we need Pillow library
+```
+pip install Pillow
+```
+
 
 
 EAD: Elastic-Net Attacks to Deep Neural Networks 
