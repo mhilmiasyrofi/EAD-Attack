@@ -1,4 +1,6 @@
-# Reproducing EAD-Attack using Docker by Muhammad Hilmi Asyrofi
+# Reproducing EAD-Attack using Docker
+
+**by Muhammad Hilmi Asyrofi**
 
 pull required docker images to prepare Tensorflow 1.3.0 with Python3 on GPU
 ```
@@ -8,13 +10,21 @@ docker pull tensorflow/tensorflow:1.3.0-devel-gpu-py3
 install Keras with specific version (because the Tensorflow 1.3.0 was last maintained 3 years ago, thus we need to install keras around 3 years ago version). I tried 2.1.2 and it works
 ```
 pip3 install keras===2.1.2
+pip3 install h5py
 ```
 
 Read the paper description and run the instruction bellow
 
 #### Due to library depreceation, we need to change some implementation
-`setup_inception.py` line 259
-change
+
+**1. `scipy.misc.imresize` depreciation**
+
+we need Pillow library
+```
+pip install Pillow
+```
+
+change `setup_inception.py` line 259
 ```
 dat = np.array(scipy.misc.imresize(scipy.misc.imread(image),(299,299)), dtype = np.float32)
 ```
@@ -23,10 +33,22 @@ into
 dat = np.array(Image.fromarray(scipy.misc.imread(image)).resize((299,299)), dtype = np.float32)
 ```
 
-we need Pillow library
+## Train model
+
+Train defensively distilled MNIST and CIFAR-10 models under specified temperatures:
+
 ```
-pip install Pillow
+python3 train_models.py -dd -t 1 10 100
 ```
+
+## Run attack
+Save original and adversarial images in the saves directory
+
+```
+python3 test_attack.py -sh
+```
+
+The adversarial image (for mnist) is save inside `saves/mnist/EN` folder
 
 
 
